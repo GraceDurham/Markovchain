@@ -29,53 +29,61 @@ def make_chains(text_string):
 
     # Phase one:  create bi-grams as tuples
 
-    bi_gram = ()
+    # bi_gram = ()
     working_dictionary = {}
-    # index_first = 0
-    # index_second = 1
 
+    # Take big single string and chop into a list of word strings
     split_text = input_text.split()
-    # print split_text
 
+    # Limiting our index range up to end minus two. Prevents out of index errors.
     for i in range(len(split_text) - 2):  # currently list of strings aka words
 
+        # Create tuple starting with index 0 and 0 + 1. Save to key variable.
         key = (split_text[i], split_text[i + 1])
 
-        working_dictionary[key] = None
+        # Check to see if key is already in dictionary. If not, add it with value = empty list.
+        if key not in working_dictionary:
+            working_dictionary[key] = []
 
-        # bi_gram = bi_gram + (split_text[index_first], split_text[index_second])
-        # index_first += 1
-        # index_second += 1
+        # Regardless of existence, append word at index + 3 to the value list.
+        working_dictionary[key].append(split_text[i + 2])
 
-        # print "Incremented? {}".format(split_text[index_first])
-    print working_dictionary
-        # print index_first
-        # print index_second
     return working_dictionary
-
-    # print bi_gram
-    # chains = {}
-
-    # your code goes here
-
-    # return chains
 
 
 def make_text(chains):
     """Takes dictionary of markov chains; returns random text."""
 
-    text = ""
+    chains_dict = chains
 
-    # your code goes here
+    running_sentance = ""
 
-    return text
+    # print type(chains_dict)
+    # print chains_dict
+
+    word_key = choice(chains_dict.keys())
+    print "Starting point: {}".format(word_key)
+
+    while word_key in chains_dict:
+            # find corresponding value (randomized)
+            # append those items to the running sentance
+            # use 2 and 3 as your new pair
+            # run loop again
+        next_word = choice(chains_dict[word_key])
+        print "Next Word: {}".format(next_word)
+
+        running_sentance += next_word
+        print "Running sentance: {}".format(running_sentance)
+        # return text
+
+        # first word in new tuple is index 1 of the old tuple and next_word
 
 
 input_path = "green-eggs.txt"
 
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
-print input_text
+# print input_text
 # Get a Markov chain
 chains = make_chains(input_text)
 # print working_dictionary
